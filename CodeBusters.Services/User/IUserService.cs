@@ -9,5 +9,9 @@ namespace CodeBusters.Services.User
     public interface IUserService
     {
         Task<bool> RegisterUserAsync(UserRegister model);
+        Task<UserDetail> GetUserByIdAsync(int userId);
+        Task<List<UserListItem>> GetAllUsersAsync();
+        Task<bool> DeleteUserAsync(int userId);
+        Task<bool> UpdateUserAsync(UserUpdate model);
     }
 }
