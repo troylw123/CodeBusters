@@ -12,15 +12,15 @@ namespace CodeBusters.Data.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        public string comments { get; set; }
+        public string Comments { get; set; }
         [Required]
-        public int timeRequired { get; set; }
+        public int TimeRequired { get; set; }
         [Required]
-        public decimal cost { get; set; }
+        public decimal Cost { get; set; }
         [Required]
-        public bool accepted { get; set; }
+        public bool Accepted { get; set; }
         [ForeignKey("Id")]
-        public int ticketId { get; set; }
+        public int TicketId { get; set; }
         public TicketEntity TicketEntity { get; set; }
     }
 }

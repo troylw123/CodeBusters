@@ -18,16 +18,16 @@ namespace CodeBusters.Services.Assessment
         }
         public async Task<bool> CreateAssessmentAsync(CreateAssessment model)
         {
-            if (await GetAssessmentByTicketAsync(model.ticketId) != null)
+            if (await CheckAssessmentByTicketAsync(model.ticketId) != null)
                 return false;
 
             var entity = new AssessmentEntity
             {
-                comments = model.comments,
-                timeRequired = model.timeRequired,
-                cost = model.cost,
-                accepted = model.accepted,
-                ticketId = model.ticketId
+                Comments = model.comments,
+                TimeRequired = model.timeRequired,
+                Cost = model.cost,
+                Accepted = model.accepted,
+                TicketId = model.ticketId
             };
 
             _context.Assessments.Add(entity);
@@ -36,10 +36,27 @@ namespace CodeBusters.Services.Assessment
             return numberOfChanges == 1;
         }
 
-
-        private async Task<AssessmentEntity> GetAssessmentByTicketAsync(int ticketId)
+        public async Task<AssessmentDetail> GetAssessmentByTicketIdAsync(int TicketId)
         {
-            return await _context.Assessments.FirstOrDefaultAsync(Assessments => Assessments.ticketId == ticketId);
+            var entity = await _context.Assessments.FindAsync(TicketId);
+            if (entity is null)
+                return null;
+
+            var assessmentDetail = new AssessmentDetail
+            {
+                Id = entity.Id,
+                Comments = entity.Comments,
+                TimeRequired = entity.TimeRequired,
+                Cost = entity.Cost,
+                Accepted = entity.Accepted
+            };
+
+            return assessmentDetail;
+        }
+
+        private async Task<AssessmentEntity> CheckAssessmentByTicketAsync(int ticketId)
+        {
+            return await _context.Assessments.FirstOrDefaultAsync(Assessments => Assessments.TicketId == ticketId);
         }
     }
 }

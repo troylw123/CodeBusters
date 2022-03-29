@@ -9,5 +9,6 @@ namespace CodeBusters.Services.Assessment
     public interface IAssessmentService
     {
         Task<bool> CreateAssessmentAsync(CreateAssessment model);
+        Task<AssessmentDetail> GetAssessmentByTicketIdAsync(int ticketId);
     }
 }

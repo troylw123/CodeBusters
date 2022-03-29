@@ -33,5 +33,17 @@ namespace CodeBusters.WebAPI.Controllers
             }
             return BadRequest("Assessment couldn't be created.");
         }
+
+        [HttpGet("{ticketId:int}")]
+        public async Task<IActionResult> GetByTicketId([FromRoute] int TicketId)
+        {
+            var assessmentDetail = await _assessmentService.GetAssessmentByTicketIdAsync(TicketId);
+
+            if (assessmentDetail is null)
+            {
+                return NotFound();
+            }
+            return Ok(assessmentDetail);
+        }
     }
 }
