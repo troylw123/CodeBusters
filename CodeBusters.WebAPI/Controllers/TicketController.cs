@@ -19,4 +19,10 @@ namespace CodeBusters.WebAPI.Controllers
             _ticketService = ticketService;
         }
     }
+    [HttpGet]
+    public async Task<IActionResult> GetAllTickets()
+    {
+        var tickets = await _ticketService.GetAllTicketsAsync();
+        return Ok(tickets);
+    }
 }
