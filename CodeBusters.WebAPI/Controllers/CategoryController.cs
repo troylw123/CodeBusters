@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CodeBusters.Services.Category;
 using Microsoft.AspNetCore.Authorization;
+using CodeBusters.Models.Category;
 
 namespace CodeBusters.WebAPI.Controllers
 {
@@ -24,6 +25,17 @@ namespace CodeBusters.WebAPI.Controllers
         {
             var category = await _categoryService.GetAllCategoryAsync();
             return Ok(category);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryCreate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (await _categoryService.CreateCategoryAsync(request))
+                return Ok("Categorycreated successfully.");
+
+            return BadRequest("Category could not be created.");
         }
     }
 }

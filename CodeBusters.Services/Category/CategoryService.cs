@@ -6,6 +6,8 @@ using CodeBusters.Models;
 using CodeBusters.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using CodeBusters.Models.Category;
+using CodeBusters.Data.Entities;
 
 namespace CodeBusters.Services.Category
 {
@@ -36,6 +38,19 @@ namespace CodeBusters.Services.Category
                 .ToListAsync();
 
             return category;
+        }
+        public async Task<bool> CreateCategoryAsync(CategoryCreate request)
+        {
+            var categoryEntity = new CategoryEntity
+            {
+                Name = request.Name,
+                Difficulty = request.Difficulty
+            };
+
+            _dbContext.Categories.Add(categoryEntity);
+
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
+            return numberOfChanges == 1;
         }
     }
 }
