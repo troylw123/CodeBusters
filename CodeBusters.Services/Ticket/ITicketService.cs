@@ -8,6 +8,7 @@ namespace CodeBusters.Services.Ticket
 {
     public interface ITicketService
     {
+        Task<bool> CreateTicketAsync(TicketCreate request);
         Task<IEnumerable<TicketListItem>> GetAllTicketsAsync();
     }
 }

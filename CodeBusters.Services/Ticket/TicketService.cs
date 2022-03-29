@@ -42,10 +42,12 @@ namespace CodeBusters.Services.Ticket
         {
             var ticketEntity = new TicketEntity
             {
-                Ticket = request.Ticket,
-                AuthorId = _userId
+                Title = request.Title,
+                Description = request.Description,
+                Id = _userId
             };
             _dbContext.Tickets.Add(ticketEntity);
+            
             var numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
         }

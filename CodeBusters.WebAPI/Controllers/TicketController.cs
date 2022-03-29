@@ -25,4 +25,13 @@ namespace CodeBusters.WebAPI.Controllers
         var tickets = await _ticketService.GetAllTicketsAsync();
         return Ok(tickets);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateTicket([FromBody] TicketCreate request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
+        return BadRequest("Ticket could not be created.");
+    }
 }
