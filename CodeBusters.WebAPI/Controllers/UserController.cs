@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CodeBusters.Models.Users;
 using CodeBusters.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeBusters.WebAPI.Controllers
@@ -17,7 +18,7 @@ namespace CodeBusters.WebAPI.Controllers
         {
             _service = service;
         }
-
+        [Authorize]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegister model)
         {
