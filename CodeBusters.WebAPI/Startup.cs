@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CodeBusters.Data;
+using CodeBusters.Services.Assessment;
+using CodeBusters.Services.Category;
+using CodeBusters.Services.Response;
+using CodeBusters.Services.Ticket;
+using CodeBusters.Services.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +35,12 @@ namespace CodeBusters.WebAPI
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IAssessmentService, AssessmentService>();
+            services.AddScoped<IResponseService, ResponseService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
