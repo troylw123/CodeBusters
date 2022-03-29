@@ -19,5 +19,11 @@ namespace CodeBusters.WebAPI.Controllers
         {
             _categoryService = categoryService;
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategory()
+        {
+            var category = await _categoryService.GetAllCategoryAsync();
+            return Ok(category);
+        }
     }
 }
