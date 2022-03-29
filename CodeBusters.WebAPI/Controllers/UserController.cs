@@ -34,5 +34,44 @@ namespace CodeBusters.WebAPI.Controllers
 
             return BadRequest("User could not be registered.");
         }
+
+        [HttpGet("{userId:int}")]
+        public async Task<IActionResult> GetUserById([FromRoute] int userId)
+        {
+            var userDetail = await _service.GetUserByIdAsync(userId);
+            if (userDetail is null)
+            {
+                return NotFound();
+            }
+            return Ok(userDetail);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _service.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdate request)
+        {
+            if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+            return await _service.UpdateUserAsync(request)
+                ? Ok("User updated successfully.")
+                : BadRequest("User could not be updated. I blame Maria.");
+        }
+        
+        [HttpDelete("{userId:int}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] int userId)
+        {
+            return await _service.DeleteUserAsync(userId) 
+                ? Ok($"User {userId} was deleted successfully.")
+                : BadRequest($"User {userId} not found or could not be deleted.");
+
+        }
+
     }
 }
