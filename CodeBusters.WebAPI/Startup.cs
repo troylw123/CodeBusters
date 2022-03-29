@@ -37,6 +37,7 @@ namespace CodeBusters.WebAPI
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddHttpContextAccessor();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITicketService, TicketService>();

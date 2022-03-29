@@ -45,5 +45,12 @@ namespace CodeBusters.WebAPI.Controllers
             }
             return Ok(assessmentDetail);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAssessment()
+        {
+            var assessments = await _assessmentService.GetAllAssessmentsAsync();
+            return Ok(assessments);
+        }
     }
 }
