@@ -35,7 +35,7 @@ namespace CodeBusters.WebAPI
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-
+            services.AddHttpContextAccessor();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITicketService, TicketService>();
@@ -47,6 +47,7 @@ namespace CodeBusters.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeBusters.WebAPI", Version = "v1" });
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

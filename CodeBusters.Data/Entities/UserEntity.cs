@@ -22,4 +22,5 @@ namespace CodeBusters.Data.Entities
         [DefaultValue("false")]
         public bool isAdmin {get; set;}
     }
+
 }
