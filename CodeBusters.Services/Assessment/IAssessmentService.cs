@@ -10,5 +10,7 @@ namespace CodeBusters.Services.Assessment
     {
         Task<bool> CreateAssessmentAsync(CreateAssessment model);
         Task<AssessmentDetail> GetAssessmentByTicketIdAsync(int ticketId);
+        Task<IEnumerable<AssessmentsListAll>> GetAllAssessmentsAsync();
+
     }
 }
