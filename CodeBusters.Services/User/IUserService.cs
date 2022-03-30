@@ -13,5 +13,6 @@ namespace CodeBusters.Services.User
         Task<List<UserListItem>> GetAllUsersAsync();
         Task<bool> DeleteUserAsync(int userId);
         Task<bool> UpdateUserAsync(UserUpdate model);
+        Task<bool> ChangeAdminStatusAsync(int userId);
     }
 }

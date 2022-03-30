@@ -87,6 +87,27 @@ namespace CodeBusters.Services.User
             _context.Users.Remove(userEntity);
             return await _context.SaveChangesAsync() == 1;
         }
+
+        public async Task<bool> ChangeAdminStatusAsync(int userId)
+        {
+            var userEntity = await _context.Users.FindAsync(userId);
+            if (userEntity is null)
+            return false;
+
+            if (userEntity.isAdmin)
+            {
+                userEntity.isAdmin = false;
+            }
+
+            else if (!userEntity.isAdmin)
+            {
+                userEntity.isAdmin = true;
+            }
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+
+        }
     
 
         private async Task<UserEntity> GetUserByEmailAsync(string email)

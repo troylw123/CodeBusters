@@ -61,7 +61,15 @@ namespace CodeBusters.WebAPI.Controllers
 
             return await _service.UpdateUserAsync(request)
                 ? Ok("User updated successfully.")
-                : BadRequest("User could not be updated. I blame Maria.");
+                : BadRequest("User could not be updated.");
+        }
+
+        [HttpPut("{userId:int}")]
+        public async Task<IActionResult> ChangeAdminStatus([FromRoute] int userId)
+        {
+            return await _service.ChangeAdminStatusAsync(userId) 
+                ? Ok($"Admin status changed for User {userId}.")
+                : BadRequest($"Unable to change admin status for User {userId}.");
         }
         
         [HttpDelete("{userId:int}")]
