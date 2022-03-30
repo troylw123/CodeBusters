@@ -53,5 +53,17 @@ namespace CodeBusters.WebAPI.Controllers
 
             return BadRequest("Ticket could not be created.");
         }
+
+            [HttpPut]
+    public async Task<IActionResult> UpdateTicketById([FromBody] TicketUpdate request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+   
+        return await _ticketService.UpdateTicketAsync(request)
+            ? Ok("Ticket updated successfully.")
+            : BadRequest("Not could not be updated.");
+    }
+
     }
 }
