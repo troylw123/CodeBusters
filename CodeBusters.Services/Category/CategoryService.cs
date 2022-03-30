@@ -67,5 +67,15 @@ namespace CodeBusters.Services.Category
 
             return numberOfChanges == 1;
         }
+        public async Task<bool> DeleteCategoryAsync(int categoryId)
+        {
+            var categoryEntity = await _dbContext.Categories.FindAsync(categoryId);
+
+            if (categoryEntity?.Id != _userId)
+                return false;
+
+                _dbContext.Categories.Remove(categoryEntity);
+                return await _dbContext.SaveChangesAsync() == 1;
+        }
     }
 }

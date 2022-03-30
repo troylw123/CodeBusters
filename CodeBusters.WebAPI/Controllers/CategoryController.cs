@@ -47,5 +47,12 @@ namespace CodeBusters.WebAPI.Controllers
                 ? Ok("Category updated successfully.")
                 : BadRequest("Category could not be updated.");
         }
+        [HttpDelete("{categoryId:int}")]
+        public async Task<IActionResult> DeleteCategory([FromRoute] int categoryId)
+        {
+            return await _categoryService.DeleteCategoryAsync(categoryId)
+                ? Ok($"Category {categoryId} was deleted successfully.")
+                : BadRequest($"Category {categoryId} could not be deleted.");
+        }
     }
 }
