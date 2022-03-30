@@ -52,5 +52,16 @@ namespace CodeBusters.WebAPI.Controllers
             var assessments = await _assessmentService.GetAllAssessmentsAsync();
             return Ok(assessments);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAssessment([FromBody] UpdateAssessment request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _assessmentService.UpdateAssessmentAsync(request)
+            ? Ok("Assessment was successfully updated.")
+            : BadRequest("Assessment could not be updated.");
+        }
     }
 }

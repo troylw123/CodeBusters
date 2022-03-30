@@ -79,6 +79,19 @@ namespace CodeBusters.Services.Assessment
             return assessments;
         }
 
+        public async Task<bool> UpdateAssessmentAsync(UpdateAssessment request)
+        {
+            var assessmentEntity = await _context.Assessments.FindAsync(request.Id);
+
+            assessmentEntity.Comments = request.Comments;
+            assessmentEntity.TimeRequired = request.TimeRequired;
+            assessmentEntity.Cost = request.Cost;
+            assessmentEntity.Accepted = request.Accepted;
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+
         private async Task<AssessmentEntity> CheckAssessmentByTicketAsync(int ticketId)
         {
             return await _context.Assessments.FirstOrDefaultAsync(Assessments => Assessments.TicketId == ticketId);
