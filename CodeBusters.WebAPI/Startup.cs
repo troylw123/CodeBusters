@@ -19,7 +19,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using CodeBusters.Services.Token;
 
 namespace CodeBusters.WebAPI
 {
@@ -44,6 +46,7 @@ namespace CodeBusters.WebAPI
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IAssessmentService, AssessmentService>();
             services.AddScoped<IResponseService, ResponseService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -55,7 +58,7 @@ namespace CodeBusters.WebAPI
                     ValidateAudience = true,
                     ValidIssuer = Configuration["Jwt:Issuer"],
                     ValidAudience = Configuration["Jwt:Audience"],
-                    IssuerSigningKwy = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
 
                 };
             });
