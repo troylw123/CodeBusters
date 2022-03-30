@@ -54,16 +54,23 @@ namespace CodeBusters.WebAPI.Controllers
             return BadRequest("Ticket could not be created.");
         }
 
-            [HttpPut]
-    public async Task<IActionResult> UpdateTicketById([FromBody] TicketUpdate request)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-   
-        return await _ticketService.UpdateTicketAsync(request)
-            ? Ok("Ticket updated successfully.")
-            : BadRequest("Not could not be updated.");
-    }
+        [HttpPut]
+        public async Task<IActionResult> UpdateTicketById([FromBody] TicketUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            return await _ticketService.UpdateTicketAsync(request)
+                ? Ok("Ticket updated successfully.")
+                : BadRequest("Not could not be updated.");
+        }
+
+        [HttpDelete("{ticketId:int}")]
+        public async Task<IActionResult> DeleteTicket([FromRoute] int ticketId)
+        {
+            return await _ticketService.DeleteTicketAsync(ticketId)
+                ? Ok($"Ticket {ticketId} was deleted successfully.")
+                : BadRequest($"Ticket {ticketId} could not be deleted.");
+        }
     }
 }

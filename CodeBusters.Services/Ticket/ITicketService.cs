@@ -12,5 +12,6 @@ namespace CodeBusters.Services.Ticket
         Task<IEnumerable<TicketListItem>> GetAllTicketsAsync();
         Task<TicketDetail> GetTicketByIdAsync(int noteId);
         Task<bool> UpdateTicketAsync(TicketUpdate request);
+        Task<bool> DeleteTicketAsync(int ticketId);
     }
 }

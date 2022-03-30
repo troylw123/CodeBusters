@@ -69,6 +69,19 @@ namespace CodeBusters.Services.Ticket
             return numberOfChanges == 1;
         }
 
+        public async Task<bool> DeleteTicketAsync(int ticketId)
+        {
+            // Find the ticket by the given Id
+            var ticketEntity = await _dbContext.Tickets.FindAsync(ticketId);
+
+            // Validate the ticket exists and is owned by the user
+            if (ticketEntity?.Id != _userId)
+                return false;
+
+            // Remove the ticket from the DbContext and assert that the one change was saved
+            _dbContext.Tickets.Remove(ticketEntity);
+            return await _dbContext.SaveChangesAsync() == 1;
+        }
 
         public TicketService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext)
         {
