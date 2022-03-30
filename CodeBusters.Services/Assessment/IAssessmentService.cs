@@ -12,6 +12,7 @@ namespace CodeBusters.Services.Assessment
         Task<AssessmentDetail> GetAssessmentByTicketIdAsync(int ticketId);
         Task<IEnumerable<AssessmentsListAll>> GetAllAssessmentsAsync();
         Task<bool> UpdateAssessmentAsync(UpdateAssessment request);
+        Task<bool> DeleteAssessmentAsync(int Id);
 
     }
 }

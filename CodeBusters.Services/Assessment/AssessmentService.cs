@@ -92,6 +92,14 @@ namespace CodeBusters.Services.Assessment
             return numberOfChanges == 1;
         }
 
+        public async Task<bool> DeleteAssessmentAsync(int Id)
+        {
+            var assessmentEntity = await _context.Assessments.FindAsync(Id);
+
+            _context.Assessments.Remove(assessmentEntity);
+            return await _context.SaveChangesAsync() == 1;
+        }
+
         private async Task<AssessmentEntity> CheckAssessmentByTicketAsync(int ticketId)
         {
             return await _context.Assessments.FirstOrDefaultAsync(Assessments => Assessments.TicketId == ticketId);

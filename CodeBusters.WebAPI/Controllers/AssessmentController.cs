@@ -63,5 +63,13 @@ namespace CodeBusters.WebAPI.Controllers
             ? Ok("Assessment was successfully updated.")
             : BadRequest("Assessment could not be updated.");
         }
+
+        [HttpDelete("{Id:int}")]
+        public async Task<IActionResult> DeleteAssessment([FromRoute] int Id)
+        {
+            return await _assessmentService.DeleteAssessmentAsync(Id)
+            ? Ok($"Assessment {Id} was deleted successfully.")
+            : BadRequest($"Assessment {Id} could not be deleted.");
+        }
     }
 }
