@@ -39,7 +39,54 @@ namespace CodeBusters.WebAPI.Controllers
             return BadRequest("User could not be registered.");
         }
 
-        [HttpPost("~/api/Token")]
+        [HttpGet("{userId:int}")]
+        public async Task<IActionResult> GetUserById([FromRoute] int userId)
+        {
+            var userDetail = await _service.GetUserByIdAsync(userId);
+            if (userDetail is null)
+            {
+                return NotFound();
+            }
+            return Ok(userDetail);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _service.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdate request)
+        {
+            if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+            return await _service.UpdateUserAsync(request)
+                ? Ok("User updated successfully.")
+                : BadRequest("User could not be updated.");
+        }
+
+        [HttpPut("{userId:int}")]
+        public async Task<IActionResult> ChangeAdminStatus([FromRoute] int userId)
+        {
+            return await _service.ChangeAdminStatusAsync(userId) 
+                ? Ok($"Admin status changed for User {userId}.")
+                : BadRequest($"Unable to change admin status for User {userId}.");
+        }
+        
+        [HttpDelete("{userId:int}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] int userId)
+        {
+            return await _service.DeleteUserAsync(userId) 
+                ? Ok($"User {userId} was deleted successfully.")
+                : BadRequest($"User {userId} not found or could not be deleted.");
+
+        }
+      
+      // Jwt Tokens
+      [HttpPost("~/api/Token")]
         public async Task<IActionResult> Token([FromBody] TokenRequest request)
         {
             if (!ModelState.IsValid)
@@ -51,5 +98,6 @@ namespace CodeBusters.WebAPI.Controllers
 
             return Ok(tokenResponse);
         }
+
     }
 }
