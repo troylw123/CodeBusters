@@ -11,5 +11,6 @@ namespace CodeBusters.Services.Category
     {
         Task<bool> CreateCategoryAsync(CategoryCreate request);
         Task<IEnumerable<CategoryListItem>> GetAllCategoryAsync();
+        Task<bool> UpdateCategoryAsync(CategoryUpdate request);
     }
 }

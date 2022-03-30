@@ -53,5 +53,19 @@ namespace CodeBusters.Services.Category
             var numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
         }
+        public async Task<bool> UpdateCategoryAsync(CategoryUpdate request)
+        {
+            var categoryEntity = await _dbContext.Categories.FindAsync(request.Id);
+            if(categoryEntity?.Id != _userId)
+                return false;
+            
+            categoryEntity.Id = request.Id;
+            categoryEntity.Name = request.Name;
+            categoryEntity.Difficulty = request.Difficulty;
+
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
+
+            return numberOfChanges == 1;
+        }
     }
 }
