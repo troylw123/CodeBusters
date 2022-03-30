@@ -10,5 +10,6 @@ namespace CodeBusters.Services.Ticket
     {
         Task<bool> CreateTicketAsync(TicketCreate request);
         Task<IEnumerable<TicketListItem>> GetAllTicketsAsync();
+        Task<TicketDetail> GetTicketByIdAsync(int noteId);
     }
 }

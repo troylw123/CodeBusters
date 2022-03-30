@@ -27,12 +27,27 @@ namespace CodeBusters.WebAPI.Controllers
             return Ok(tickets);
         }
 
+        // GET api/Ticket/5
+        [HttpGet("{ticketId:int}")]
+        public async Task<IActionResult> GetTicketById([FromRoute] int ticketId)
+        {
+            var detail = await _ticketService.GetTicketByIdAsync(ticketId);
+
+            // Similar to our service method, we're using a ternary to determine our return type
+            // If the returned value (detail) is not null, return it with a 200 OK
+            // Otherwise return a NotFound() 404 response
+            return detail is not null
+                ? Ok(detail)
+                : NotFound();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CreateTicket([FromBody] TicketCreate request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            
+
             if (await _ticketService.CreateTicketAsync(request))
                 return Ok("Ticket created successfully.");
 
