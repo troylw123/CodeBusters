@@ -37,5 +37,22 @@ namespace CodeBusters.WebAPI.Controllers
 
             return BadRequest("Category could not be created.");
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateCategoryById([FromBody] CategoryUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _categoryService.UpdateCategoryAsync(request)
+                ? Ok("Category updated successfully.")
+                : BadRequest("Category could not be updated.");
+        }
+        [HttpDelete("{categoryId:int}")]
+        public async Task<IActionResult> DeleteCategory([FromRoute] int categoryId)
+        {
+            return await _categoryService.DeleteCategoryAsync(categoryId)
+                ? Ok($"Category {categoryId} was deleted successfully.")
+                : BadRequest($"Category {categoryId} could not be deleted.");
+        }
     }
 }
