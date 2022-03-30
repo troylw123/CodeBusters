@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CodeBusters.Models.Ticket;
 using CodeBusters.Services.Ticket;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,20 +19,24 @@ namespace CodeBusters.WebAPI.Controllers
         {
             _ticketService = ticketService;
         }
-    }
-    [HttpGet]
-    public async Task<IActionResult> GetAllTickets()
-    {
-        var tickets = await _ticketService.GetAllTicketsAsync();
-        return Ok(tickets);
-    }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateTicket([FromBody] TicketCreate request)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        
-        return BadRequest("Ticket could not be created.");
+        [HttpGet]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            var tickets = await _ticketService.GetAllTicketsAsync();
+            return Ok(tickets);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTicket([FromBody] TicketCreate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            if (await _ticketService.CreateTicketAsync(request))
+                return Ok("Ticket created successfully.");
+
+            return BadRequest("Ticket could not be created.");
+        }
     }
 }
