@@ -14,8 +14,7 @@ namespace CodeBusters.Models.Category
         [Required]
         public string Name { get; set; }
         [Required]
-        [MinLength(1)]
-        [MaxLength(10)]
+        [Range(1,10)]
         public int Difficulty {get; set; }
     }
 }
