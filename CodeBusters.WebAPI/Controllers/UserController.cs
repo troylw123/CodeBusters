@@ -6,6 +6,7 @@ using CodeBusters.Models.Token;
 using CodeBusters.Models.Users;
 using CodeBusters.Services.Token;
 using CodeBusters.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeBusters.WebAPI.Controllers
@@ -21,7 +22,7 @@ namespace CodeBusters.WebAPI.Controllers
             _service = service;
             _tokenService = tokenService;
         }
-
+        [Authorize]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegister model)
         {
