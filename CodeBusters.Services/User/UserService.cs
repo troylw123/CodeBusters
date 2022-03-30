@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CodeBusters.Data;
 using CodeBusters.Data.Entities;
 using CodeBusters.Models.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeBusters.Services.User
@@ -19,14 +20,17 @@ namespace CodeBusters.Services.User
         public async Task<bool> RegisterUserAsync(UserRegister model)
         {
             if (await GetUserByEmailAsync(model.Email) != null)
-            return false;
+                return false;
 
             var entity = new UserEntity
             {
                 FullName = model.FullName,
-                Email= model.Email,
-                Password = model.Password
+                Email = model.Email,
             };
+
+            var passwordHasher = new PasswordHasher<UserEntity>();
+
+            entity.Password = passwordHasher.HashPassword(entity, model.Password);
 
             _context.Users.Add(entity);
             var numberOfChanges = await _context.SaveChangesAsync();
@@ -115,6 +119,6 @@ namespace CodeBusters.Services.User
             return await _context.Users.FirstOrDefaultAsync(user => user.Email.ToLower() == email.ToLower());
         }
 
-        
+
     }
 }

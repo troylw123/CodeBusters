@@ -4,15 +4,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CodeBusters.Data.Entities
+namespace CodeBusters.Models.Category
 {
-    public class CategoryEntity
+    public class CategoryUpdate
     {
         [Key]
+        [Required]
         public int Id {get; set;}
         [Required]
-        public string Name {get; set;}
+        public string Name { get; set; }
         [Required]
-        public int Difficulty {get; set;}
+        [MinLength(1)]
+        [MaxLength(10)]
+        public int Difficulty {get; set; }
     }
 }
