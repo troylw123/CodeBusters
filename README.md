@@ -9,7 +9,7 @@ The Code Busters Api is reliant upon the Ticket Entity. Once a user submits a ti
 - [Project Tickets](https://trello.com/b/QTFoHqiV/code-busters-final-project)
 
 ## Credits
-- Troy Weaver       |
+- Troy Weaver       |   https://github.com/troylw123   |   
 - Maria Harrell     |   https://github.com/mariaharrell13   |   https://www.linkedin.com/in/maria-harrell/
-- Hunter Browning   |
-- Robin Hancock     |
+- Hunter Browning   |      |      |
+- Robin Hancock     |      |      
