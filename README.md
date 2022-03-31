@@ -7,3 +7,9 @@ The Code Busters Api is reliant upon the Ticket Entity. Once a user submits a ti
 ## External Resources
 - [Project Planning](https://docs.google.com/document/d/1_K83dHZoMieXm9c5TDeMUXnocI3-ocmpHuf5QcbbIY0/edit#)
 - [Project Tickets](https://trello.com/b/QTFoHqiV/code-busters-final-project)
+
+## Credits
+- Troy Weaver       |
+- Maria Harrell     |   https://github.com/mariaharrell13   |   https://www.linkedin.com/in/maria-harrell/
+- Hunter Browning   |
+- Robin Hancock     |
