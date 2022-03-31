@@ -1,23 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CodeBusters.Data.Entities
+namespace CodeBusters.Models.Review
 {
-    public class ReviewEntity
+    public class ReviewCreate
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         [Range(0, 5)]
         public float Rating { get; set; }
         [Required]
         public string Comments { get; set; }
-        [ForeignKey("Id")]
+        [Required]
         public int TicketId { get; set; }
-        public TicketEntity TicketEntity { get; set; }
     }
 }
