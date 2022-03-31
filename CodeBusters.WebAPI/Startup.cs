@@ -22,6 +22,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CodeBusters.Services.Token;
+using CodeBusters.Services.Review;
 
 namespace CodeBusters.WebAPI
 {
@@ -48,6 +49,7 @@ namespace CodeBusters.WebAPI
             services.AddScoped<IAssessmentService, AssessmentService>();
             services.AddScoped<IResponseService, ResponseService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IReviewService, ReviewService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -70,7 +72,7 @@ namespace CodeBusters.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeBusters.WebAPI", Version = "v1" });
             });
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
