@@ -15,15 +15,17 @@ namespace CodeBusters.Services.Assessment
     {
         private readonly int _userId;
         private readonly ApplicationDbContext _context;
-        public AssessmentService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public AssessmentService(ApplicationDbContext context)
         {
             _context = context;
 
-            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            var value = userClaims.FindFirst("Id")?.Value;
-            var validId = int.TryParse(value, out _userId);
-            if (!validId)
-                throw new Exception("Attempted to build AssessmentService without User Id claim.");
+            // , IHttpContextAccessor httpContextAccessor - removed from constructor above for testing
+
+            // var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            // var value = userClaims.FindFirst("Id")?.Value;
+            // var validId = int.TryParse(value, out _userId);
+            // if (!validId)
+            //     throw new Exception("Attempted to build AssessmentService without User Id claim.");
         }
         public async Task<bool> CreateAssessmentAsync(CreateAssessment model)
         {

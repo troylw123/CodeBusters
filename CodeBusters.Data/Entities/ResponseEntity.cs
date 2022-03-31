@@ -15,6 +15,7 @@ namespace CodeBusters.Data.Entities
         public string Text {get; set;}
         [ForeignKey("Assessment")]
         public int AssessmentId {get; set;}
-        public AssessmentEntity Assessment {get; set;}
+
+        // public AssessmentEntity Assessment {get; set;}
     }
 }

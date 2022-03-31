@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeBusters.WebAPI.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TicketController : ControllerBase

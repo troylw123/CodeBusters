@@ -31,6 +31,12 @@ namespace CodeBusters.Services.Response
             
         }
 
+        public async Task<IEnumerable<ResponseEntity>> GetAllResponsesAsync()
+        {
+            var responses = await _context.Responses.ToListAsync();
+            return responses;
+        }
+
         public async Task<IEnumerable<ResponseEntity>> GetResponsesByAssessmentIdAsync(int assessmentId)
         {
             var responses = await _context.Responses

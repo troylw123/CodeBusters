@@ -30,6 +30,14 @@ namespace CodeBusters.WebAPI.Controllers
 
             return BadRequest($"Response could not be added.");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllResponses()
+        {
+            var responses = await _service.GetAllResponsesAsync();
+            return Ok(responses);
+        }
+
         [HttpGet("{assessmentId:int}")]
         public async Task<IActionResult> GetResponses([FromRoute] int assessmentId)
         {
@@ -44,9 +52,10 @@ namespace CodeBusters.WebAPI.Controllers
                 return BadRequest(ModelState);
 
             return await _service.UpdateResponseAsync(request)
-                ? Ok("Note updated successfully.")
-                : BadRequest ("Note could not be updated.");
+                ? Ok("Response updated successfully.")
+                : BadRequest ("Response could not be updated.");
         }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteResponse([FromRoute] int id)
         {

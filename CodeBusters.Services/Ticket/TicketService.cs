@@ -18,7 +18,7 @@ namespace CodeBusters.Services.Ticket
         public async Task<IEnumerable<TicketListItem>> GetAllTicketsAsync()
         {
             var tickets = await _dbContext.Tickets
-                .Where(entity => entity.Id == _userId)
+                // .Where(entity => entity.Id == _userId)
                 .Select(entity => new TicketListItem
                 {
                     Id = entity.Id,
@@ -34,16 +34,19 @@ namespace CodeBusters.Services.Ticket
             // Find the first ticket that has the given Id and an OwnerId that matches the requesting userId
             var ticketEntity = await _dbContext.Tickets
                 .FirstOrDefaultAsync(e =>
-                    e.Id == ticketId && e.Id == _userId
+                    e.Id == ticketId 
                 );
+
+                // && e.Id == _userId - removed from FirstOrDefaultAsync for testing
 
             // If ticketEntity is null then return null, otherwise initialize and return a new TicketDetail
             return ticketEntity is null ? null : new TicketDetail
             {
                 Id = ticketEntity.Id,
                 Title = ticketEntity.Title,
-                Description = ticketEntity.Description
-
+                Description = ticketEntity.Description,
+                Category = ticketEntity.Category,
+                UserID = ticketEntity.UserID
             };
         }
 
@@ -55,8 +58,8 @@ namespace CodeBusters.Services.Ticket
             // By using the null conditional operator we can check if it's null at the same time we check the OwnerId
             // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/member-access-operators#null-conditional-operators--and-(Links to an external site.)
 
-            if (ticketEntity?.Id != _userId)
-                return false;
+            // if (ticketEntity?.Id != _userId)
+            //     return false;
 
             // Now we update the entity's properties
             ticketEntity.Title = request.Title;
@@ -75,21 +78,24 @@ namespace CodeBusters.Services.Ticket
             var ticketEntity = await _dbContext.Tickets.FindAsync(ticketId);
 
             // Validate the ticket exists and is owned by the user
-            if (ticketEntity?.Id != _userId)
-                return false;
+            // if (ticketEntity?.Id != _userId)
+            //     return false;
 
             // Remove the ticket from the DbContext and assert that the one change was saved
             _dbContext.Tickets.Remove(ticketEntity);
             return await _dbContext.SaveChangesAsync() == 1;
         }
 
-        public TicketService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext)
+        public TicketService(ApplicationDbContext dbContext)
         {
-            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            var value = userClaims.FindFirst("Id")?.Value;
-            var validId = int.TryParse(value, out _userId);
-            if (!validId)
-                throw new Exception("Attempted to build TicketService without User Id claim.");
+
+            // IHttpContextAccessor httpContextAccessor, removed from () above for testing
+
+            // var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            // var value = userClaims.FindFirst("Id")?.Value;
+            // var validId = int.TryParse(value, out _userId);
+            // if (!validId)
+            //     throw new Exception("Attempted to build TicketService without User Id claim.");
 
             _dbContext = dbContext;
         }

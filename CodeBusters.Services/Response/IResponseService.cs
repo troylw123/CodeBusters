@@ -10,6 +10,7 @@ namespace CodeBusters.Services.Response
     public interface IResponseService
     {
         Task<bool> CreateResponseAsync(ResponseCreate request);
+        Task<IEnumerable<ResponseEntity>> GetAllResponsesAsync();
         Task<IEnumerable<ResponseEntity>> GetResponsesByAssessmentIdAsync(int assessmentId);
         Task<bool> UpdateResponseAsync(ResponseEntity request);
         Task<bool> DeleteResponseAsync(int id);

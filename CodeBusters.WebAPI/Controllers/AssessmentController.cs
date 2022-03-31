@@ -18,7 +18,7 @@ namespace CodeBusters.WebAPI.Controllers
             _assessmentService = assessmentService;
         }
 
-        [HttpPost("Create Assessment")]
+        [HttpPost("CreateAssessment")]
         public async Task<IActionResult> CreateAssessment([FromBody] CreateAssessment model)
         {
             if (!ModelState.IsValid)
