@@ -21,6 +21,8 @@ namespace CodeBusters.Data.Entities
         
         [DefaultValue("false")]
         public bool isAdmin {get; set;}
+
+        public List<TicketEntity> Tickets {get; set;} //foreign key work
     }
 
 }
