@@ -12,4 +12,4 @@ The Code Busters Api is reliant upon the Ticket Entity. Once a user submits a ti
 - Troy Weaver       |   https://github.com/troylw123   |   https://www.linkedin.com/in/-troyweaver-/
 - Maria Harrell     |   https://github.com/mariaharrell13   |   https://www.linkedin.com/in/maria-harrell/
 - Hunter Browning   |      |      |
-- Robin Hancock     |      |      
+- Robin Hancock     |   https://github.com/Kahoona542     |      
