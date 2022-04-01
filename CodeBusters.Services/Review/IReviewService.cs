@@ -11,5 +11,7 @@ namespace CodeBusters.Services.Review
         Task<bool> CreateReviewAsync(ReviewCreate request);
         Task<IEnumerable<ReviewListItem>> GetAllReviewsAsync();
         Task<ReviewDetail> GetReviewByTicketIdAsync(int ticketId);
+        Task<bool> UpdateReviewAsync(ReviewUpdate request);
+        Task<bool> DeleteReviewAsync(int TicketId);
     }
 }
