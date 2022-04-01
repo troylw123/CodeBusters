@@ -70,6 +70,31 @@ namespace CodeBusters.Services.Review
             };
         }
 
+        public async Task<bool> UpdateReviewAsync(ReviewUpdate request)
+        {
+            var reviewEntity = await _context.Reviews.FindAsync(request.Id);
+
+            // if (reviewEntity?.OwnerId != _userId)
+            // return false;
+
+            reviewEntity.Rating = request.Rating;
+            reviewEntity.Comments = request.Comments;
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+
+            return numberOfChanges == 1;
+        }
+
+        public async Task<bool> DeleteReviewAsync(int TicketId)
+        {
+            var reviewEntity = await _context.Reviews.FindAsync(TicketId);
+
+            // if (reviewEntity?.Owner != _userId)
+            // return false;
+
+            _context.Reviews.Remove(reviewEntity);
+            return await _context.SaveChangesAsync() == 1;
+        }
 
     }
 }

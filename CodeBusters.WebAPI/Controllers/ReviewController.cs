@@ -44,5 +44,24 @@ namespace CodeBusters.WebAPI.Controllers
 
             return detail is not null ? Ok(detail) : NotFound();
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateReviewAsync([FromBody] ReviewUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _reviewService.UpdateReviewAsync(request)
+            ? Ok("Review updated successfully.")
+            : BadRequest("Review could not be updated.");
+        }
+
+        [HttpDelete("{TicketId}:int")]
+        public async Task<IActionResult> DeleteReview([FromRoute] int TicketId)
+        {
+            return await _reviewService.DeleteReviewAsync(TicketId)
+            ? Ok($"The Review of Ticket {TicketId} was deleted successfully.")
+            : BadRequest($"Review of Ticket {TicketId} could not be deleted");
+        }
     }
 }
