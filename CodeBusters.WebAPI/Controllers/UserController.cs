@@ -22,7 +22,7 @@ namespace CodeBusters.WebAPI.Controllers
             _service = service;
             _tokenService = tokenService;
         }
-        [Authorize]
+        // [Authorize]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegister model)
         {

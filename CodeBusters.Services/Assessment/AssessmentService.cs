@@ -15,15 +15,17 @@ namespace CodeBusters.Services.Assessment
     {
         private readonly int _userId;
         private readonly ApplicationDbContext _context;
-        public AssessmentService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public AssessmentService(ApplicationDbContext context)
         {
             _context = context;
 
-            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            var value = userClaims.FindFirst("Id")?.Value;
-            var validId = int.TryParse(value, out _userId);
-            if (!validId)
-                throw new Exception("Attempted to build AssessmentService without User Id claim.");
+            // , IHttpContextAccessor httpContextAccessor - removed from constructor above for testing
+
+            // var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            // var value = userClaims.FindFirst("Id")?.Value;
+            // var validId = int.TryParse(value, out _userId);
+            // if (!validId)
+            //     throw new Exception("Attempted to build AssessmentService without User Id claim.");
         }
         public async Task<bool> CreateAssessmentAsync(CreateAssessment model)
         {
@@ -77,6 +79,27 @@ namespace CodeBusters.Services.Assessment
             }).ToListAsync();
 
             return assessments;
+        }
+
+        public async Task<bool> UpdateAssessmentAsync(UpdateAssessment request)
+        {
+            var assessmentEntity = await _context.Assessments.FindAsync(request.Id);
+
+            assessmentEntity.Comments = request.Comments;
+            assessmentEntity.TimeRequired = request.TimeRequired;
+            assessmentEntity.Cost = request.Cost;
+            assessmentEntity.Accepted = request.Accepted;
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+
+        public async Task<bool> DeleteAssessmentAsync(int Id)
+        {
+            var assessmentEntity = await _context.Assessments.FindAsync(Id);
+
+            _context.Assessments.Remove(assessmentEntity);
+            return await _context.SaveChangesAsync() == 1;
         }
 
         private async Task<AssessmentEntity> CheckAssessmentByTicketAsync(int ticketId)
