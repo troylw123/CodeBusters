@@ -16,20 +16,22 @@ namespace CodeBusters.Services.Category
     {
         private readonly int _userId;
         private readonly ApplicationDbContext _dbContext;
-        public CategoryService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext) 
+        public CategoryService(ApplicationDbContext dbContext) 
         {
-            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            var value = userClaims.FindFirst("Id")?.Value;
-            var validId = int.TryParse(value, out _userId);
-        if (!validId)
-            throw new Exception("Attempted to build CategoryService without User Id claim.");
+            // IHttpContextAccessor httpContextAccessor, removed from () above for testing
+
+        //     var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+        //     var value = userClaims.FindFirst("Id")?.Value;
+        //     var validId = int.TryParse(value, out _userId);
+        // if (!validId)
+        //     throw new Exception("Attempted to build CategoryService without User Id claim.");
 
             _dbContext = dbContext;
         }
         public async Task<IEnumerable<CategoryListItem>> GetAllCategoryAsync()
         {
             var category = await _dbContext.Categories
-                .Where(entity => entity.Id == _userId)
+                // .Where(entity => entity.Id == _userId)
                 .Select(entity => new CategoryListItem
                 {
                     Id = entity.Id,
@@ -56,8 +58,8 @@ namespace CodeBusters.Services.Category
         public async Task<bool> UpdateCategoryAsync(CategoryUpdate request)
         {
             var categoryEntity = await _dbContext.Categories.FindAsync(request.Id);
-            if(categoryEntity?.Id != _userId)
-                return false;
+            // if(categoryEntity?.Id != _userId)
+            //     return false;
             
             categoryEntity.Id = request.Id;
             categoryEntity.Name = request.Name;
@@ -71,8 +73,8 @@ namespace CodeBusters.Services.Category
         {
             var categoryEntity = await _dbContext.Categories.FindAsync(categoryId);
 
-            if (categoryEntity?.Id != _userId)
-                return false;
+            // if (categoryEntity?.Id != _userId)
+            //     return false;
 
                 _dbContext.Categories.Remove(categoryEntity);
                 return await _dbContext.SaveChangesAsync() == 1;

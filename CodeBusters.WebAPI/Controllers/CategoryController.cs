@@ -10,7 +10,7 @@ using CodeBusters.Models.Category;
 
 namespace CodeBusters.WebAPI.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoryController : ControllerBase
@@ -26,14 +26,20 @@ namespace CodeBusters.WebAPI.Controllers
             var category = await _categoryService.GetAllCategoryAsync();
             return Ok(category);
         }
+        
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreate request)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
-            if (await _categoryService.CreateCategoryAsync(request))
-                return Ok("Categorycreated successfully.");
+            var registerResult = await _categoryService.CreateCategoryAsync(request);
+            if (registerResult)
+            {
+                return Ok("Category created successfully.");
+            }
 
             return BadRequest("Category could not be created.");
         }

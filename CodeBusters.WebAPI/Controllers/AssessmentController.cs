@@ -18,7 +18,7 @@ namespace CodeBusters.WebAPI.Controllers
             _assessmentService = assessmentService;
         }
 
-        [HttpPost("Create Assessment")]
+        [HttpPost("CreateAssessment")]
         public async Task<IActionResult> CreateAssessment([FromBody] CreateAssessment model)
         {
             if (!ModelState.IsValid)
@@ -51,6 +51,25 @@ namespace CodeBusters.WebAPI.Controllers
         {
             var assessments = await _assessmentService.GetAllAssessmentsAsync();
             return Ok(assessments);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAssessment([FromBody] UpdateAssessment request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _assessmentService.UpdateAssessmentAsync(request)
+            ? Ok("Assessment was successfully updated.")
+            : BadRequest("Assessment could not be updated.");
+        }
+
+        [HttpDelete("{Id:int}")]
+        public async Task<IActionResult> DeleteAssessment([FromRoute] int Id)
+        {
+            return await _assessmentService.DeleteAssessmentAsync(Id)
+            ? Ok($"Assessment {Id} was deleted successfully.")
+            : BadRequest($"Assessment {Id} could not be deleted.");
         }
     }
 }
