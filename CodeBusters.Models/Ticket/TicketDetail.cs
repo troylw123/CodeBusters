@@ -12,7 +12,7 @@ namespace CodeBusters.Models.Ticket
         public string Title {get; set; }
         public string Description {get; set; }
         public bool Archived {get; set;}
-        public int Category {get; set; }
+        public int CategoryId {get; set; }
         public int UserID {get; set; }
     }
 }

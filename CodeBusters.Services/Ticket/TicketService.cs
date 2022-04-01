@@ -45,7 +45,7 @@ namespace CodeBusters.Services.Ticket
                 Id = ticketEntity.Id,
                 Title = ticketEntity.Title,
                 Description = ticketEntity.Description,
-                Category = ticketEntity.Category,
+                CategoryId = ticketEntity.CategoryId,
                 UserID = ticketEntity.UserID
             };
         }
