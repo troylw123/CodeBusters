@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeBusters.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220330175535_InitialMigration")]
+    [Migration("20220401154531_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,33 @@ namespace CodeBusters.Data.Migrations
                     b.ToTable("Responses");
                 });
 
+            modelBuilder.Entity("CodeBusters.Data.Entities.ReviewEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("TicketEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TicketEntityId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("CodeBusters.Data.Entities.TicketEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -101,10 +128,7 @@ namespace CodeBusters.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Archived")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Category")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -118,7 +142,14 @@ namespace CodeBusters.Data.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isArchived")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Tickets");
                 });
@@ -168,6 +199,39 @@ namespace CodeBusters.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Assessment");
+                });
+
+            modelBuilder.Entity("CodeBusters.Data.Entities.ReviewEntity", b =>
+                {
+                    b.HasOne("CodeBusters.Data.Entities.TicketEntity", "TicketEntity")
+                        .WithMany()
+                        .HasForeignKey("TicketEntityId");
+
+                    b.Navigation("TicketEntity");
+                });
+
+            modelBuilder.Entity("CodeBusters.Data.Entities.TicketEntity", b =>
+                {
+                    b.HasOne("CodeBusters.Data.Entities.CategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CodeBusters.Data.Entities.UserEntity", "User")
+                        .WithMany("Tickets")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CodeBusters.Data.Entities.UserEntity", b =>
+                {
+                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }
