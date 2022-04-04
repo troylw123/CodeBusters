@@ -13,5 +13,6 @@ namespace CodeBusters.Services.Ticket
         Task<TicketDetail> GetTicketByIdAsync(int ticketId);
         Task<bool> UpdateTicketAsync(TicketUpdate request);
         Task<bool> DeleteTicketAsync(int ticketId);
+        Task<bool> ChangeArchiveStatusAsync(int ticketId);
     }
 }

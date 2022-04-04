@@ -14,8 +14,15 @@ namespace CodeBusters.Services.Response
     public class ResponseService : IResponseService
     {
         private readonly ApplicationDbContext _context;
-        public ResponseService(ApplicationDbContext context)
+        private readonly int _userId;
+        public ResponseService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
+            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            var value = userClaims.FindFirst("Id")?.Value;
+            var validId = int.TryParse(value, out _userId);
+            if (!validId)
+                throw new Exception("Attempted to build AssessmentService without User Id claim.");
+
             _context = context;
         }
         public async Task<bool> CreateResponseAsync(ResponseCreate request)

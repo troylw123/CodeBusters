@@ -82,7 +82,8 @@ namespace CodeBusters.Services.Token
             {
              new Claim("Id", user.Id.ToString()),
              new Claim("Email", user.Email),
-             new Claim("Name", user.FullName)
+             new Claim("Name", user.FullName),
+             new Claim("isAdmin", user.isAdmin.ToString())
             };
 
             return claims;

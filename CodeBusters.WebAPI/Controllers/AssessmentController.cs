@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using CodeBusters.Models.Assessment;
 using CodeBusters.Services.Assessment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeBusters.WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AssessmentController : ControllerBase
