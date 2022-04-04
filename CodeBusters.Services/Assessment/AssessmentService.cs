@@ -59,7 +59,8 @@ namespace CodeBusters.Services.Assessment
                 Comments = entity.Comments,
                 TimeRequired = entity.TimeRequired,
                 Cost = entity.Cost,
-                Accepted = entity.Accepted
+                Accepted = entity.Accepted,
+                TicketId = entity.TicketId
             };
 
             return assessmentDetail;

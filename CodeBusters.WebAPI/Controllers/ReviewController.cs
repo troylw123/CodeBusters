@@ -56,12 +56,12 @@ namespace CodeBusters.WebAPI.Controllers
             : BadRequest("Review could not be updated.");
         }
 
-        [HttpDelete("{TicketId}:int")]
-        public async Task<IActionResult> DeleteReview([FromRoute] int TicketId)
+        [HttpDelete("{Id:int}")]
+        public async Task<IActionResult> DeleteReview([FromRoute] int Id)
         {
-            return await _reviewService.DeleteReviewAsync(TicketId)
-            ? Ok($"The Review of Ticket {TicketId} was deleted successfully.")
-            : BadRequest($"Review of Ticket {TicketId} could not be deleted");
+            return await _reviewService.DeleteReviewAsync(Id)
+            ? Ok($"Review number {Id} was deleted successfully.")
+            : BadRequest($"Review number {Id} could not be deleted");
         }
     }
 }

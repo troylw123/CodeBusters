@@ -15,5 +15,7 @@ namespace CodeBusters.Models.Ticket
         [Required]
         [MaxLength(8000, ErrorMessage = "{0} must contain no more than {1} charcaters")]
         public string Description {get; set; }
+        public int CategoryId {get; set;}
+        public int UserID {get; set;}
     }
 }

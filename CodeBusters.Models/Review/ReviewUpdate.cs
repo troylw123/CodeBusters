@@ -11,7 +11,7 @@ namespace CodeBusters.Models.Review
         [Required]
         public int Id { get; set; }
         [Required]
-        public int Rating { get; set; }
+        public float Rating { get; set; }
         [Required]
         public string Comments { get; set; }
         [Required]

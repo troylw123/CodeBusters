@@ -15,13 +15,15 @@ namespace CodeBusters.Services.Review
     {
         private readonly int _userId;
         private readonly ApplicationDbContext _context;
-        public ReviewService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext Context)
+        public ReviewService(ApplicationDbContext Context)
+
+        // IHttpContextAccessor httpContextAccessor, - removed from constructor above for testing
         {
-            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            var value = userClaims.FindFirst("Id")?.Value;
-            var validId = int.TryParse(value, out _userId);
-            if (!validId)
-                throw new Exception("Attempted to build Review service without User Id claim.");
+            // var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            // var value = userClaims.FindFirst("Id")?.Value;
+            // var validId = int.TryParse(value, out _userId);
+            // if (!validId)
+            //     throw new Exception("Attempted to build Review service without User Id claim.");
 
             _context = Context;
         }
@@ -85,9 +87,9 @@ namespace CodeBusters.Services.Review
             return numberOfChanges == 1;
         }
 
-        public async Task<bool> DeleteReviewAsync(int TicketId)
+        public async Task<bool> DeleteReviewAsync(int Id)
         {
-            var reviewEntity = await _context.Reviews.FindAsync(TicketId);
+            var reviewEntity = await _context.Reviews.FindAsync(Id);
 
             // if (reviewEntity?.Owner != _userId)
             // return false;

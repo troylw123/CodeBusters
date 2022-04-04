@@ -22,7 +22,7 @@ namespace CodeBusters.Services.Ticket
                 .Select(entity => new TicketListItem
                 {
                     Id = entity.Id,
-                    Title = entity.Title
+                    Title = entity.Title,
                 })
                 .ToListAsync();
 
@@ -103,7 +103,8 @@ namespace CodeBusters.Services.Ticket
             {
                 Title = request.Title,
                 Description = request.Description,
-                Id = _userId
+                CategoryId = request.CategoryId,
+                UserID = request.UserID
             };
             _dbContext.Tickets.Add(ticketEntity);
 

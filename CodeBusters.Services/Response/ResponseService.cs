@@ -31,16 +31,29 @@ namespace CodeBusters.Services.Response
             
         }
 
-        public async Task<IEnumerable<ResponseEntity>> GetAllResponsesAsync()
+        public async Task<IEnumerable<ResponseListItem>> GetAllResponsesAsync()
         {
-            var responses = await _context.Responses.ToListAsync();
+            var responses = await _context.Responses
+            .Select(entity => new ResponseListItem
+                {
+                    Id = entity.Id,
+                    Text = entity.Text,
+                    AssessmentId = entity.AssessmentId
+                })
+                .ToListAsync();
             return responses;
         }
 
-        public async Task<IEnumerable<ResponseEntity>> GetResponsesByAssessmentIdAsync(int assessmentId)
+        public async Task<IEnumerable<ResponseListItem>> GetResponsesByAssessmentIdAsync(int assessmentId)
         {
             var responses = await _context.Responses
                 .Where(entity => entity.AssessmentId == assessmentId)
+                .Select(entity => new ResponseListItem
+                {
+                    Id = entity.Id,
+                    Text = entity.Text,
+                    AssessmentId = entity.AssessmentId
+                })
                 .ToListAsync();
 
             return responses;
