@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeBusters.WebAPI.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TicketController : ControllerBase
@@ -62,7 +62,7 @@ namespace CodeBusters.WebAPI.Controllers
 
             return await _ticketService.UpdateTicketAsync(request)
                 ? Ok("Ticket updated successfully.")
-                : BadRequest("Not could not be updated.");
+                : BadRequest("Ticket could not be updated.");
         }
 
         [HttpDelete("{ticketId:int}")]
