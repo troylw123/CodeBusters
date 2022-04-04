@@ -44,7 +44,8 @@ namespace CodeBusters.Services.Ticket
                 Title = ticketEntity.Title,
                 Description = ticketEntity.Description,
                 Category = ticketEntity.CategoryId,
-                UserID = ticketEntity.UserID
+                UserID = ticketEntity.UserID,
+                isArchived = ticketEntity.isArchived
             };
         }
 
@@ -106,6 +107,27 @@ namespace CodeBusters.Services.Ticket
 
             var numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
+        }
+
+        public async Task<bool> ChangeArchiveStatusAsync(int ticketId)
+        {
+            var ticketEntity = await _dbContext.Tickets.FindAsync(ticketId);
+            if (ticketEntity is null)
+            return false;
+
+            if (ticketEntity.isArchived)
+            {
+                ticketEntity.isArchived = false;
+            }
+
+            else if (!ticketEntity.isArchived)
+            {
+                ticketEntity.isArchived = true;
+            }
+
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
+            return numberOfChanges == 1;
+
         }
     }
 }

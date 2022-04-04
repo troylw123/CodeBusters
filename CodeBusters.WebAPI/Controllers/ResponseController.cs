@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using CodeBusters.Data.Entities;
 using CodeBusters.Models.Responses;
 using CodeBusters.Services.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeBusters.WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ResponseController : ControllerBase
