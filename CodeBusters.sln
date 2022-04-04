@@ -72,5 +72,5 @@ Global
 		{A9F87D84-E5F5-4DB4-BF57-C5F2CC3558F5}.Release|x64.Build.0 = Release|Any CPU
 		{A9F87D84-E5F5-4DB4-BF57-C5F2CC3558F5}.Release|x86.ActiveCfg = Release|Any CPU
 		{A9F87D84-E5F5-4DB4-BF57-C5F2CC3558F5}.Release|x86.Build.0 = Release|Any CPU
-	EndGlobalSection
+		EndGlobalSection
 EndGlobal
