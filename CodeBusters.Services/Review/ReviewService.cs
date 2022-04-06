@@ -15,21 +15,23 @@ namespace CodeBusters.Services.Review
     {
         private readonly int _userId;
         private readonly ApplicationDbContext _context;
-        public ReviewService(ApplicationDbContext Context)
-
-        // IHttpContextAccessor httpContextAccessor, - removed from constructor above for testing
+        public ReviewService(ApplicationDbContext Context, IHttpContextAccessor httpContextAccessor)
+        
         {
-            // var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            // var value = userClaims.FindFirst("Id")?.Value;
-            // var validId = int.TryParse(value, out _userId);
-            // if (!validId)
-            //     throw new Exception("Attempted to build Review service without User Id claim.");
+            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            var value = userClaims.FindFirst("Id")?.Value;
+            var validId = int.TryParse(value, out _userId);
+            if (!validId)
+                throw new Exception("Attempted to build Review service without User Id claim.");
 
             _context = Context;
         }
 
         public async Task<bool> CreateReviewAsync(ReviewCreate request)
         {
+            if (await CheckReviewByTicketIdAsync(request.TicketId) != null)
+                throw new Exception("Only 1 review allowed per ticket.");
+
             var reviewEntity = new ReviewEntity
             {
                 Rating = request.Rating,
@@ -96,6 +98,10 @@ namespace CodeBusters.Services.Review
 
             _context.Reviews.Remove(reviewEntity);
             return await _context.SaveChangesAsync() == 1;
+        }
+        private async Task<ReviewEntity> CheckReviewByTicketIdAsync(int ticketId)
+        {
+            return await _context.Reviews.FirstOrDefaultAsync(Review => Review.TicketId == ticketId);
         }
 
     }

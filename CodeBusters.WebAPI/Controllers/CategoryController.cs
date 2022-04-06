@@ -10,7 +10,7 @@ using CodeBusters.Models.Category;
 
 namespace CodeBusters.WebAPI.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoryController : ControllerBase

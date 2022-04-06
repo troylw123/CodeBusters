@@ -79,5 +79,13 @@ namespace CodeBusters.WebAPI.Controllers
                 ? Ok($"Ticket {ticketId} was deleted successfully.")
                 : BadRequest($"Ticket {ticketId} could not be deleted.");
         }
+
+        [HttpPut("{ticketId:int}")]
+        public async Task<IActionResult> ChangeArchiveStatus([FromRoute] int ticketId)
+        {
+            return await _ticketService.ChangeArchiveStatusAsync(ticketId) 
+                ? Ok($"Archive status changed for Ticket {ticketId}.")
+                : BadRequest($"Unable to change admin status for Ticket {ticketId}.");
+        }
     }
 }

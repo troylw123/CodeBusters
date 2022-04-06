@@ -15,22 +15,24 @@ namespace CodeBusters.Services.Assessment
     {
         private readonly int _userId;
         private readonly ApplicationDbContext _context;
-        public AssessmentService(ApplicationDbContext context)
+        public AssessmentService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
 
-            // , IHttpContextAccessor httpContextAccessor - removed from constructor above for testing
+            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            var value = userClaims.FindFirst("Id")?.Value;
+            var validId = int.TryParse(value, out _userId);
+            if (!validId)
+                throw new Exception("Attempted to build AssessmentService without User Id claim.");
 
-            // var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            // var value = userClaims.FindFirst("Id")?.Value;
-            // var validId = int.TryParse(value, out _userId);
-            // if (!validId)
-            //     throw new Exception("Attempted to build AssessmentService without User Id claim.");
+            var adminStatus = userClaims.FindFirst("isAdmin").Value;
+            if (adminStatus == "False")
+                throw new Exception("Must be an admin to use the Assessment Service.");
         }
         public async Task<bool> CreateAssessmentAsync(CreateAssessment model)
         {
             if (await CheckAssessmentByTicketAsync(model.ticketId) != null)
-                return false;
+                throw new Exception("Only 1 assessment allowed per ticket.");
 
             var entity = new AssessmentEntity
             {
