@@ -27,6 +27,13 @@ namespace CodeBusters.WebAPI.Controllers
             return Ok(tickets);
         }
 
+        [HttpGet("Archived")]
+        public async Task<IActionResult> GetArchivedTickets()
+        {
+            var tickets = await _ticketService.GetArchivedTicketsAsync();
+            return Ok(tickets);
+        }
+
         // GET api/Ticket/5
         [HttpGet("{ticketId:int}")]
         public async Task<IActionResult> GetTicketById([FromRoute] int ticketId)

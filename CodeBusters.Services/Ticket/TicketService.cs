@@ -18,7 +18,21 @@ namespace CodeBusters.Services.Ticket
         public async Task<IEnumerable<TicketListItem>> GetAllTicketsAsync()
         {
             var tickets = await _dbContext.Tickets
-                .Where(entity => entity.UserID == _userId)
+                .Where(entity => entity.UserID == _userId && entity.isArchived == false)
+                .Select(entity => new TicketListItem
+                {
+                    Id = entity.Id,
+                    Title = entity.Title,
+                })
+                .ToListAsync();
+
+            return tickets;
+        }
+
+        public async Task<IEnumerable<TicketListItem>> GetArchivedTicketsAsync()
+        {
+            var tickets = await _dbContext.Tickets
+                .Where(entity => entity.UserID == _userId && entity.isArchived == true)
                 .Select(entity => new TicketListItem
                 {
                     Id = entity.Id,
