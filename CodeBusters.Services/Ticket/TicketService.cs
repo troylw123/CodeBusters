@@ -115,7 +115,8 @@ namespace CodeBusters.Services.Ticket
                 Title = request.Title,
                 Description = request.Description,
                 CategoryId = request.CategoryId,
-                UserID = request.UserID
+                UserID = _userId
+                // UserID = request.UserID
             };
             _dbContext.Tickets.Add(ticketEntity);
 
