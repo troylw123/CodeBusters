@@ -6,6 +6,8 @@ The **Code Busters API** is reliant upon the Ticket Entity. Once a user submits 
 
 This API contains 6 data tables, each with the 4 main CRUD operations, plus additional endpoints for added functionality. See the API Documention link in our *External Resources* section below for detailed information.
 
+***We started a console application which currently includes the User table only.***
+
 ## Languages and Technologies Utilized
 - C#
 - .NET Core
